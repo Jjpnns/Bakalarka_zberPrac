@@ -1,59 +1,63 @@
 package com.example.bakalarka_zberprac.Service;
 
 import com.example.bakalarka_zberprac.entity.UcitelEntity;
-import com.example.bakalarka_zberprac.repository.ucitelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UcitelService {
-    @Autowired
-    private ucitelRepository ucitelRepository;
+  @Autowired
+  private com.example.bakalarka_zberprac.Repository.ucitelRepository ucitelRepository;
 
-    // Create a new user
-    public UcitelEntity createUcitel(UcitelEntity user) {
+  @Autowired
+  private LdapService ldapService;
 
-        return ucitelRepository.save(user);
+  public UcitelEntity createUcitel(UcitelEntity ucitelEntity) {
+    return ucitelRepository.save(ucitelEntity);
+  }
+
+  public UcitelEntity updateUcitel(UcitelEntity updatedUcitel) {
+    UcitelEntity existingUcitel = ucitelRepository.findByIdUcitel(updatedUcitel.getIdUcitel());
+
+    if (existingUcitel != null) {
+      existingUcitel.setMeno(updatedUcitel.getMeno());
+      existingUcitel.setPriezvisko(updatedUcitel.getPriezvisko());
+      existingUcitel.setLogin(updatedUcitel.getLogin());
+      existingUcitel.setHeslo(updatedUcitel.getHeslo());
+      existingUcitel.setJeadmin(updatedUcitel.getJeadmin());
+
+      return ucitelRepository.save(existingUcitel);
+    } else {
+      throw new IllegalArgumentException("Učiteľ s ID " + updatedUcitel.getIdUcitel() + " neexistuje.");
     }
+  }
 
-    // Get all users
-    public List<UcitelEntity> getAllUcitel() {
+  public List<UcitelEntity> getAllUcitel() {
+    return ucitelRepository.findAll();
+  }
 
-        return ucitelRepository.findAll();
+  public UcitelEntity getUcitelByLogin(String login) { // Zmena názvu metódy
+    UcitelEntity ucitelEntity = ucitelRepository.findByLogin(login); // Zmena volania metódy
+    if (ucitelEntity == null) {
+      String ldapUid = ldapService.findLdapUidByUsername(login);
+      if (ldapUid != null) {
+        ucitelEntity = new UcitelEntity();
+        ucitelEntity.setLogin(login);
+        return ucitelRepository.save(ucitelEntity);
+      }
     }
+    return ucitelEntity;
+  }
 
-    // Get user by ID
-    public Optional<UcitelEntity> getUcitelById(Long id) {
 
-        return ucitelRepository.findById(id);
-    }
 
-    // Update user
-    public UcitelEntity updateUcitel(Long id, UcitelEntity userDetails) {
-        Optional<UcitelEntity> user = ucitelRepository.findById(id);
-        if (user.isPresent()) {
-            UcitelEntity existingUser = user.get();
-            existingUser.setMeno(userDetails.getMeno());
-            existingUser.setPriezvisko(userDetails.getPriezvisko());
-            return ucitelRepository.save(existingUser);
-        }
-        return null;
-    }
+  public void deleteAllUcitel() {
+    ucitelRepository.deleteAll();
+  }
 
-    // Delete all users
-    public void deleteAllUcitel() {
-
-        ucitelRepository.deleteAll();
-    }
-
-    // Delete user
-    public void deleteUcitel(Long id) {
-
-        ucitelRepository.deleteById(id);
-    }
-
-    // Other business logic related to users
+  public void deleteUcitel(Long id) {
+    ucitelRepository.deleteById(id);
+  }
 }

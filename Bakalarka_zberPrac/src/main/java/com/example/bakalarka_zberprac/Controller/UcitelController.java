@@ -1,56 +1,45 @@
 package com.example.bakalarka_zberprac.Controller;
 
-import com.example.bakalarka_zberprac.Service.UcitelService;
 import com.example.bakalarka_zberprac.entity.UcitelEntity;
+import com.example.bakalarka_zberprac.Service.UcitelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
-@RequestMapping("/ucitel")
+@RequestMapping("/ucitelia")
 public class UcitelController {
-    @Autowired
-    private UcitelService ucitelService;
+  @Autowired
+  private UcitelService ucitelService;
 
-    // Create a new user
-    @PostMapping
-    public UcitelEntity createUcitel(@RequestBody UcitelEntity user) {
-        return UcitelService.createUcitel(user);
-    }
+  @GetMapping("/")
+  public List<UcitelEntity> getAllUcitelia() {
+    return ucitelService.getAllUcitel();
+  }
 
-    // Get all users
-    @GetMapping
-    public List<UcitelEntity> getAllUsers() {
-        return ucitelService.getAllUcitel();
-    }
+  @GetMapping("/{login}") // Zmena názvu parametra
+  public UcitelEntity getUcitelByLogin(@PathVariable String login) { // Zmena názvu metódy
+    return ucitelService.getUcitelByLogin(login); // Zmena volania metódy
+  }
 
-    // Get user by ID
-    @GetMapping("/{id}")
-    public Optional<UcitelEntity> getUserById(@PathVariable Long id) {
-        return ucitelService.getUcitelById(id);
-    }
+  @PostMapping("/")
+  public UcitelEntity createUcitel(@RequestBody UcitelEntity ucitelEntity) {
+    return ucitelService.createUcitel(ucitelEntity);
+  }
 
-    // Update user by ID
-    @PutMapping("/{id}")
-    public UcitelEntity updateUcitel(@PathVariable Long id, @RequestBody UcitelEntity user) {
-        return ucitelService.updateUcitel(id, user);
-    }
+  @PutMapping("/")
+  public UcitelEntity updateUcitel(@RequestBody UcitelEntity ucitelEntity) {
+    return ucitelService.updateUcitel(ucitelEntity);
+  }
 
-    // Delete all users
-    @DeleteMapping
-    public String deleteAllUcitel() {
-        ucitelService.deleteAllUcitel();
-        return "All users have been deleted successfully.";
-    }
+  @DeleteMapping("/")
+  public void deleteAllUcitelia() {
+    ucitelService.deleteAllUcitel();
+  }
 
-    // Delete user by ID
-    @DeleteMapping("/{id}"
-    public void deleteUcitel(@PathVariable Long id) {
-        ucitelService.deleteUcitel(id);
-
-    }
+  @DeleteMapping("/{id}")
+  public void deleteUcitel(@PathVariable Long id) {
+    ucitelService.deleteUcitel(id);
+  }
 }
