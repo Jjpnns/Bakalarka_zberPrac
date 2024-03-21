@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ucitelRepository extends JpaRepository<UcitelEntity, Long> {
+public interface ucitelRepository extends JpaRepository<UcitelEntity, Integer> {
   UcitelEntity findByMeno(String meno);
 
-  UcitelEntity findByLogin(String login); // Zmena názvu metódy
+  UcitelEntity findByLogin(String login);
 
   UcitelEntity findByIdUcitel(Integer id);
 

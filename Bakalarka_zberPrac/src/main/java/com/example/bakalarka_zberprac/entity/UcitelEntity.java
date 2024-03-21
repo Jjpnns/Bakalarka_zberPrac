@@ -27,7 +27,10 @@ public class UcitelEntity {
     @Column(name = "jeadmin")
     private Boolean jeadmin;
 
-    public int getIdUcitel() {
+  public UcitelEntity(String username, String s) {
+  }
+
+  public int getIdUcitel() {
         return idUcitel;
     }
 

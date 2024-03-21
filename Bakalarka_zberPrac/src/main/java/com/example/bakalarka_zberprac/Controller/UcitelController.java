@@ -38,8 +38,10 @@ public class UcitelController {
     ucitelService.deleteAllUcitel();
   }
 
-  @DeleteMapping("/{id}")
+  /*@DeleteMapping("/{id}")
   public void deleteUcitel(@PathVariable Long id) {
     ucitelService.deleteUcitel(id);
   }
+  */
+
 }

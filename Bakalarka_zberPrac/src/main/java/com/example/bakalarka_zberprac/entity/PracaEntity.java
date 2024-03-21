@@ -19,7 +19,7 @@ public class PracaEntity {
     @Column(name = "id_skolitel")
     private Integer idSkolitel;
     @Basic
-    @Column(name = "id_oponent")
+    @Column(name = " id_oponent")
     private Integer idOponent;
     @Basic
     @Column(name = "stupen")
