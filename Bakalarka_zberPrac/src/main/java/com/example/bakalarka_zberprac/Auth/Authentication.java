@@ -1,20 +1,20 @@
 package com.example.bakalarka_zberprac.Auth;
 
-import com.example.bakalarka_zberprac.Service.LdapService;
 import com.example.bakalarka_zberprac.entity.UcitelEntity;
 import com.example.bakalarka_zberprac.Repository.ucitelRepository;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.ldap.core.LdapTemplate;
 
 public class Authentication implements UserAuth {
 
   private final HttpSessUserAuth httpSession;
   private final ucitelRepository ucitelRepository;
-  private final LdapService ldapService;
+  private final LdapTemplate ldapTemplate;
 
-  public Authentication(HttpSession httpSession, ucitelRepository ucitelRepository, LdapService ldapService) {
+  public Authentication(HttpSession httpSession, ucitelRepository ucitelRepository, LdapTemplate ldapTemplate) {
     this.httpSession = new HttpSessUserAuth(httpSession, ucitelRepository);
     this.ucitelRepository = ucitelRepository;
-    this.ldapService = ldapService;
+    this.ldapTemplate = ldapTemplate;
   }
 
   @Override

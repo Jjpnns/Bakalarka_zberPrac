@@ -15,27 +15,27 @@ public class UcitelController {
 
   @GetMapping("/")
   public List<UcitelEntity> getAllUcitelia() {
-    return ucitelService.getAllUcitel();
+    return ucitelService.vypisVsetkychUcitelov();
   }
 
-  @GetMapping("/{login}") // Zmena názvu parametra
-  public UcitelEntity getUcitelByLogin(@PathVariable String login) { // Zmena názvu metódy
-    return ucitelService.getUcitelByLogin(login); // Zmena volania metódy
-  }
+//  @GetMapping("/{login}") // Zmena názvu parametra
+//  public UcitelEntity getUcitelByLogin(@PathVariable String login) { // Zmena názvu metódy
+//    return ucitelService.; // Zmena volania metódy
+//  }
 
   @PostMapping("/")
-  public UcitelEntity createUcitel(@RequestBody UcitelEntity ucitelEntity) {
-    return ucitelService.createUcitel(ucitelEntity);
+  public UcitelEntity createUcitel(@RequestBody String meno, String priezvisko, String login, String heslo, Boolean jeadmin) {
+    return ucitelService.pridajUcitela(meno, priezvisko, login, heslo, jeadmin);
   }
 
-  @PutMapping("/")
-  public UcitelEntity updateUcitel(@RequestBody UcitelEntity ucitelEntity) {
-    return ucitelService.updateUcitel(ucitelEntity);
-  }
+//  @PutMapping("/")
+//  public UcitelEntity updateUcitel(@RequestBody UcitelEntity ucitelEntity) {
+//    return ucitelService.;
+//  }
 
   @DeleteMapping("/")
-  public void deleteAllUcitelia() {
-    ucitelService.deleteAllUcitel();
+  public void deleteAllUcitelia(int idUcitel) {
+    ucitelService.vymazUcitela(idUcitel);
   }
 
   /*@DeleteMapping("/{id}")

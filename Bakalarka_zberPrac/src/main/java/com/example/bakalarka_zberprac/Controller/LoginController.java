@@ -2,6 +2,7 @@ package com.example.bakalarka_zberprac.Controller;
 
 import com.example.bakalarka_zberprac.Service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,16 +15,12 @@ public class LoginController {
       this.loginService = loginService;
     }
 
-  @GetMapping("/loginnm")
-  public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
-    boolean loggedIn = loginService.loginnm(username, password);
-
-    if (loggedIn) {
-      return "Success"; // Vrátiť úspešnú správu, ak je prihlásenie úspešné
-    } else {
-      return "Failure"; // Vrátiť chybovú správu, ak prihlásenie zlyhalo
-    }
+    @GetMapping("/LoginLdap")
+  public ResponseEntity<String> LoginLdap(@RequestParam("ldapID") String uid, @RequestParam("pass") String pass)  {
+      return loginService.LoginLdap(uid,pass);
   }
+
+  
 
   }
 
